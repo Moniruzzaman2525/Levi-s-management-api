@@ -66,6 +66,12 @@ async function run() {
             const result = await servicesCollection.deleteOne(query);
             res.send(result);
         })
+        app.delete('/deletedd/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await servicesCollection.deleteOne(query);
+            res.send(result);
+        })
     }
     finally {
 
@@ -76,5 +82,5 @@ run().catch(console.dir);
 
 
 app.listen(port, () => {
-    console.log('Listening', port);
+    console.log('Listening Port', port);
 })
