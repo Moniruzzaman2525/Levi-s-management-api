@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const port = process.env.PORT || 5000;
 
@@ -21,9 +21,31 @@ async function run() {
         const servicesCollection = client.db("assignment-11").collection("services");
 
         app.get('/services', async (req, res) => {
+
             const cursor = servicesCollection.find()
             const services = await cursor.toArray();
             res.send(services)
+        });
+        app.get('/service/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await servicesCollection.findOne(query);
+            res.send(result);
+        });
+        //update user
+        app.put('/service/:id', async (req, res) => {
+            const id = req.params.id;
+            const user = req.body;
+            // console.log(user);
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    quentity: user.newQuentity
+                },
+            };
+            result = await servicesCollection.updateOne(filter, updateDoc, options);
+            res.send(result);
         })
     }
     finally {
@@ -33,9 +55,6 @@ async function run() {
 
 run().catch(console.dir);
 
-app.get('/', (req, res) => {
-    res.send('Hello assignment start')
-})
 
 app.listen(port, () => {
     console.log('Listening', port);
