@@ -46,7 +46,7 @@ async function run() {
             result = await servicesCollection.updateOne(filter, updateDoc, options);
             res.send(result);
         });
-        app.put('/deliver/:id', async (req, res) => {
+        app.put('/delivery/:id', async (req, res) => {
             const id = req.params.id;
             const user = req.body;
             const deliver = user.quantity - 1;
@@ -65,13 +65,18 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const result = await servicesCollection.deleteOne(query);
             res.send(result);
-        })
-        app.delete('/deletedd/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const result = await servicesCollection.deleteOne(query);
+        });
+        //Add Item
+        app.post('/add', async (req, res) => {
+            const newItem = req.body;
+            const result = await servicesCollection.insertOne(newItem);
             res.send(result);
         })
+
+
+
+
+
     }
     finally {
 
