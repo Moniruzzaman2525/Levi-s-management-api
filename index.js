@@ -32,6 +32,7 @@ async function run() {
             const result = await servicesCollection.findOne(query);
             res.send(result);
         });
+
         //update user
         app.put('/service/:id', async (req, res) => {
             const id = req.params.id;
@@ -71,11 +72,15 @@ async function run() {
             const newItem = req.body;
             const result = await servicesCollection.insertOne(newItem);
             res.send(result);
+        });
+        app.get('/add', async (req, res) => {
+            const email = req.query.email;
+            // console.log('email', email);
+            const query = { email: email };
+            const cursor = servicesCollection.find(query);
+            const addItems = await cursor.toArray();
+            res.send(addItems)
         })
-
-
-
-
 
     }
     finally {
