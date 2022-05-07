@@ -67,7 +67,7 @@ async function run() {
             const options = { upsert: true };
             const updateDoc = {
                 $set: {
-                    quentity: user.newQuentity
+                    quantity: user.newQuentity
                 },
             };
             result = await servicesCollection.updateOne(filter, updateDoc, options);
@@ -83,7 +83,7 @@ async function run() {
             const options = { upsert: true };
             const updateDoc = {
                 $set: {
-                    quentity: deliver
+                    quantity: deliver
                 },
             };
             result = await servicesCollection.updateOne(filter, updateDoc, options);
