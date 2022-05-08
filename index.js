@@ -127,7 +127,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get('/', (req, res) => {
-    res.send('Server Check')
+    res.send('Welcome to levis website')
 })
 app.listen(port, () => {
     console.log('Listening Port', port);
